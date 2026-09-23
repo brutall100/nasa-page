@@ -1,48 +1,225 @@
 <!DOCTYPE html>
-<html lang="lt">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Page · Mars Dust Explorer</title>
+    <meta name="description" content="Explore NASA's Astronomy Picture of the Day, Mars rover photos and the NASA Image Library in one dusty, Mars-themed page.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffdab9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#3b2f2f" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Planets</title>
-        <meta name="description" content="Information about planets and space exploration by NASA.">
-        <meta name="keywords" content="Nasa, planets, space">
-        <meta name="author" content="Aldas">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-        <link rel="stylesheet" href="index.css">
-    </head>
+    <!-- Sets the saved theme before the first paint, so the page never flashes -->
+    <script src="js/theme-init.js"></script>
 
-    <body>
-        <div class="container">
-            <div class="page">
-                <header>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@600;800&family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="css/style.css">
 
-                    <!-- Header content here -->
+    <script src="js/background.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
 
-                </header>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-                <main>
-                    <section class="left-section">
-                        <!--  -->
-                    </section>
+    <!-- Live background: Mars dust storm -->
+    <div class="sky" aria-hidden="true">
+        <div class="sky__glow sky__glow--sun"></div>
+        <div class="sky__glow sky__glow--dust"></div>
+        <div class="sky__tracks"></div>
+        <div class="sky__particles"></div>
+    </div>
 
-                    <section class="right-section">
-                        <!--  -->
-                    </section>
-                </main>
+    <header class="topbar">
+        <a class="brand" href="#top" aria-label="NASA Page home">
+            <svg class="brand__logo" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+                <circle cx="16" cy="16" r="10" class="brand__planet"/>
+                <ellipse cx="16" cy="16" rx="15" ry="4.5" class="brand__ring" transform="rotate(-18 16 16)"/>
+                <circle cx="12.5" cy="13" r="1.8" class="brand__crater"/>
+                <circle cx="19" cy="19" r="1.2" class="brand__crater"/>
+            </svg>
+            <span class="brand__name">NASA<span class="brand__dot">·</span>Page</span>
+        </a>
 
+        <nav class="topbar__nav" aria-label="Sections">
+            <a href="#apod">Picture of the day</a>
+            <a href="#mars">Mars rovers</a>
+            <a href="#library">Library</a>
+        </nav>
 
-                <footer>
-                    <div>
-                        <!-- Footer content here -->
-                    </div>
-                </footer>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+            <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <circle cx="12" cy="12" r="4.5"/>
+                <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/>
+            </svg>
+            <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/>
+            </svg>
+        </button>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <!-- Hero -->
+        <section class="hero" id="top" aria-labelledby="hero-title">
+            <p class="eyebrow">Mission log · Earth → Mars</p>
+            <h1 id="hero-title" class="hero__title">Dust off the universe.</h1>
+            <p class="hero__lead">
+                Three NASA archives in one place: today's astronomy picture, raw photos
+                from the Mars rovers and more than 140,000 images from NASA's library.
+            </p>
+
+            <div class="hero__actions">
+                <a class="btn btn--primary" href="#apod">
+                    <svg class="btn__icon icon-telescope" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <path d="m3 14 13-6 2 4-13 6zM16 8l3-1.5 2 4-3 1.5M9 17l-2 5M11 16l2 6"/>
+                    </svg>
+                    <span>Start exploring</span>
+                </a>
+                <p class="status" role="status" aria-live="polite">
+                    <span class="status__dot" aria-hidden="true"></span>
+                    <span class="status__text">Connecting to NASA…</span>
+                </p>
             </div>
+
+            <ul class="stats" aria-label="Mission numbers">
+                <li class="stat reveal">
+                    <span class="stat__value" data-count="apod-days">0</span>
+                    <span class="stat__label">days in the APOD archive</span>
+                </li>
+                <li class="stat reveal">
+                    <span class="stat__value" data-count="curiosity-sols">0</span>
+                    <span class="stat__label">sols Curiosity has spent on Mars</span>
+                </li>
+                <li class="stat reveal">
+                    <span class="stat__value" data-count="perseverance-sols">0</span>
+                    <span class="stat__label">sols for Perseverance</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Astronomy Picture of the Day -->
+        <section class="panel panel--wide reveal" id="apod" aria-labelledby="apod-title">
+            <div class="panel__head">
+                <p class="panel__tag">01 · APOD</p>
+                <h2 id="apod-title" class="panel__title">Astronomy picture of the day</h2>
+            </div>
+
+            <form class="controls" id="apod-form">
+                <div class="field">
+                    <label for="apod-date">Date</label>
+                    <input type="date" id="apod-date" name="date" min="1995-06-16" required>
+                </div>
+                <button class="btn btn--primary" type="submit">
+                    <svg class="btn__icon icon-spark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <path d="M12 2c.8 5 2.2 6.9 7 8-4.8 1.1-6.2 3-7 8-.8-5-2.2-6.9-7-8 4.8-1.1 6.2-3 7-8Z"/>
+                    </svg>
+                    <span>Show picture</span>
+                </button>
+                <button class="btn btn--ghost" type="button" id="apod-random">
+                    <svg class="btn__icon icon-dice" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="3"/>
+                        <circle cx="9" cy="9" r="1.2"/><circle cx="15" cy="15" r="1.2"/><circle cx="15" cy="9" r="1.2"/><circle cx="9" cy="15" r="1.2"/>
+                    </svg>
+                    <span>Random day</span>
+                </button>
+            </form>
+
+            <div class="apod">
+                <figure class="viewfinder apod__media" data-hud="APOD">
+                    <img id="apod-image" src="images/deep-space.webp" width="1200" height="695"
+                         alt="A deep space field full of stars and distant galaxies" fetchpriority="high">
+                </figure>
+                <article class="apod__text">
+                    <h3 id="apod-heading" class="apod__heading">Deep space field</h3>
+                    <p class="meta" id="apod-meta">Loading…</p>
+                    <p id="apod-explanation" class="apod__explanation">
+                        NASA's picture of the day is on its way.
+                    </p>
+                    <a class="link" id="apod-link" href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener">
+                        Open on apod.nasa.gov
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <div class="duo">
+            <!-- Mars rover photos -->
+            <section class="panel reveal" id="mars" aria-labelledby="mars-title">
+                <div class="panel__head">
+                    <p class="panel__tag">02 · Rover cam</p>
+                    <h2 id="mars-title" class="panel__title">Photos from Mars</h2>
+                </div>
+
+                <form class="controls" id="mars-form">
+                    <div class="field">
+                        <label for="mars-rover">Rover</label>
+                        <select id="mars-rover" name="rover">
+                            <option value="curiosity">Curiosity</option>
+                            <option value="perseverance">Perseverance</option>
+                            <option value="opportunity">Opportunity</option>
+                            <option value="spirit">Spirit</option>
+                        </select>
+                    </div>
+                    <div class="field field--small">
+                        <label for="mars-sol">Sol <span class="field__hint">(Mars day)</span></label>
+                        <input type="number" id="mars-sol" name="sol" min="0" max="4000" placeholder="random" inputmode="numeric">
+                    </div>
+                    <button class="btn btn--primary" type="submit">
+                        <svg class="btn__icon icon-wheel" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/>
+                            <path d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21"/>
+                        </svg>
+                        <span>Get Mars photo</span>
+                    </button>
+                </form>
+
+                <figure class="viewfinder" data-hud="NAVCAM">
+                    <img id="mars-image" src="images/mars-rover.webp" width="720" height="407"
+                         alt="A rover-eye view of the rocky red surface of Mars" loading="lazy">
+                    <figcaption class="meta" id="mars-caption">Pick a rover and a sol, or leave the sol empty for a surprise.</figcaption>
+                </figure>
+            </section>
+
+            <!-- NASA image library -->
+            <section class="panel reveal" id="library" aria-labelledby="library-title">
+                <div class="panel__head">
+                    <p class="panel__tag">03 · Archive</p>
+                    <h2 id="library-title" class="panel__title">NASA image library</h2>
+                </div>
+
+                <form class="controls" id="library-form">
+                    <div class="field field--grow">
+                        <label for="library-query">Search</label>
+                        <input type="search" id="library-query" name="q" value="nebula" placeholder="e.g. Saturn, Apollo 11" required>
+                    </div>
+                    <button class="btn btn--primary" type="submit">
+                        <svg class="btn__icon icon-rocket" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                            <path d="M14 4c3-1.5 5.5-1 6 0 .5.5 1 3-.5 6L13 16.5 7.5 11Z"/>
+                            <path d="M7.5 11 4 11.5 6.5 8.5l4-.5M13 16.5l-.5 3.5 3-2.5.5-4M6 18c-1 1-1.5 2.5-1.5 2.5S6 20 7 19"/>
+                        </svg>
+                        <span>Find image</span>
+                    </button>
+                </form>
+
+                <figure class="viewfinder" data-hud="ARCHIVE">
+                    <img id="library-image" src="images/deep-space.webp" width="1200" height="695"
+                         alt="A deep space field full of stars and distant galaxies" loading="lazy">
+                    <figcaption class="meta" id="library-caption">Type a word and get a random image from NASA's archive.</figcaption>
+                </figure>
+            </section>
         </div>
-        <script src="index.js"></script>
-    </body>
+    </main>
 
+    <footer class="footer">
+        <p>
+            Data from <a class="link" href="https://api.nasa.gov/" target="_blank" rel="noopener">NASA Open APIs</a>.
+            A fan project, not affiliated with NASA.
+        </p>
+        <p class="meta">© 2026 brutall100 · MIT License</p>
+    </footer>
+</body>
 </html>
-
-
